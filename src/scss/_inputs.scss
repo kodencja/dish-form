@@ -13,7 +13,7 @@
   @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
   border: $thumb-border-width solid $thumb-border-color;
   height: $thumb-height;
-  width: $thumb-width;
+  width: $thumb-width !important;
   border-radius: $thumb-radius;
   background: $thumb-color;
   cursor: pointer;
@@ -119,7 +119,7 @@ input[type="range"] {
   @include paddMrg("padding", $bubble-radius / 2, $bubble-radius * 2);
   position: absolute;
   border-radius: $bubble-radius;
-  left: 50%;
+  // left: 50%;
 }
 
 label {

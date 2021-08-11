@@ -39,7 +39,6 @@ const reducer = (state, action) => {
     case "preparation_time":
       return {
         ...state,
-        // preparation_time: { ...state.preparation_time, val: parseInt(action.payload) },
         preparation_time: { ...state.preparation_time, val: action.payload },
       };
 
@@ -59,7 +58,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         no_of_slices: { ...state.no_of_slices, val: parseInt(action.payload) },
-        // no_of_slices: { ...state.no_of_slices, val: action.payload },
       };
 
     case "no_of_slices_check":
@@ -70,7 +68,6 @@ const reducer = (state, action) => {
 
     case "diameter":
       return { ...state, diameter: { ...state.diameter, val: parseFloat(action.payload) } };
-      // return { ...state, diameter: { ...state.diameter, val: action.payload } };
 
     case "diameter_check":
       return {
@@ -82,7 +79,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         spiciness_scale: { ...state.spiciness_scale, val: parseInt(action.payload) },
-        // spiciness_scale: { ...state.spiciness_scale, val: action.payload },
       };
 
     case "spiciness_scale_check":
@@ -95,7 +91,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         slices_of_bread: { ...state.slices_of_bread, val: parseInt(action.payload) },
-        // slices_of_bread: { ...state.slices_of_bread, val: action.payload },
       };
 
     case "slices_of_bread_check":
@@ -162,7 +157,7 @@ function App() {
   // refs to particular divs
   const answerRef = useRef();
   const dishesRef = useRef();
-  const photoRef = useRef();
+  // const photoRef = useRef();
 
   // ref to submit btn
   const btnRef = useRef();
@@ -182,14 +177,6 @@ function App() {
     loading,
   } = state;
 
-
-  useEffect(()=>{
-  //  console.log(id); 
-  // console.log(loading);
-  // console.log(validationFinished);
-  // console.log(finalResponse);
- 
-  })
 
   // final step with API Post Request
   useEffect(() => {
@@ -213,7 +200,6 @@ function App() {
 
       const options = {
         method: "POST",
-        // url: "https://frosty-wood-6558.getsandbox.com:443/dishes",
         url: "https://jsonplaceholder.typicode.com/posts",
         headers: { "Content-type": "application/json" },
         data: dataToSend.current,
@@ -275,22 +261,109 @@ function App() {
 
 
   // set dynamically the bubble's 'left' attribute
+  // const getOutputStyle = useCallback(
+  //   (inputVal, el, unit) => {
+  //     const styles = getComputedStyle(el.target);
+  //     const padding =
+  //       parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+  //     const elWidth = parseFloat(el.target.clientWidth - padding);
+
+  //     if (el !== undefined && el !== null) {
+  //       let refObjMin = parseInt(el.target.getAttribute("min") - 1);
+  //       let refObjMax = parseInt(el.target.getAttribute("max"));
+  //       if (refObjMin < 0) refObjMin = refObjMin * -1;
+  //       const leftOutput =
+  //         (parseInt(inputVal) + refObjMin) / (refObjMin + refObjMax) + unit;
+  //       dispatch({
+  //         type: "outputStyle",
+  //         payload: elWidth * parseFloat(leftOutput) - 7,
+  //       });
+  //       return false;
+  //     }
+  //   },
+  //   [spiciness_scale, outputStyle]
+  // );
+
   const getOutputStyle = useCallback(
-    (inputVal, el, propName, unit) => {
+    (inputVal, el, unit) => {
       const styles = getComputedStyle(el.target);
       const padding =
         parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
-      const elWidth = parseFloat(el.target.clientWidth - padding);
+        const thumb_width = 12;
+        const form_ctrl_padd = 12;
+        const form_ctrl_bord = 1;
+        // parseFloat(styles.paddingLeft);
+      // const elWidth = parseFloat(el.target.clientWidth - padding);
+      // const elWidth = parseFloat(el.target.clientWidth);
+      // const elWidthInner = 241+ (form_ctrl_padd*2)+(form_ctrl_bord*2);
+      // const elWidthInner = 241+ (form_ctrl_padd)+(form_ctrl_bord);
+      // const elWidth = elWidthInner - thumb_width;
+      // const elWidth = 241 -thumb_width -6; // działa gdy form_ctrl_padd = 0
+      const elWidth = 241;
+      // const elWidth = 267- thumb_width;
+
+      // console.log(padding);
+      // console.log(elWidth);
+
+
+      const bubbleWidthToTrackWidth = (6/elWidth);
 
       if (el !== undefined && el !== null) {
-        let refObjMin = parseInt(el.target.getAttribute("min") - 1);
+        let refObjMin = parseInt(el.target.getAttribute("min"));
         let refObjMax = parseInt(el.target.getAttribute("max"));
         if (refObjMin < 0) refObjMin = refObjMin * -1;
+
+        // console.log(refObjMin);
+        // console.log(refObjMax);
+        const ratio = ((parseInt(inputVal) - refObjMin) / (refObjMax - refObjMin) );
+       
         const leftOutput =
-          (parseInt(inputVal) + refObjMin) / (refObjMin + refObjMax) + unit;
+          // (((elWidth*parseInt(inputVal)/ refObjMax)/ elWidth) *100);
+          // (((elWidth*parseInt(inputVal)/ refObjMax)/ (elWidth-6)) *100);
+          // ((elWidth*(parseInt(inputVal) -refObjMin)/ (refObjMax-refObjMin)));
+
+          // (( (elWidth-thumb_width)*(parseInt(inputVal) -refObjMin)/ (refObjMax-refObjMin)));
+          // ( ((elWidth*(parseInt(inputVal) +refObjMin) )/ (refObjMax-refObjMin) ) +6 );
+          // ( (( (elWidth-6)*(parseInt(inputVal) +refObjMin) )/ (refObjMax-refObjMin) +(6/(parseInt(inputVal)+1))) );
+          // ( (( (elWidth)*(parseInt(inputVal) +refObjMin) )/ (refObjMax-refObjMin) ) -thumb_width +6 );
+          
+          
+          ( ( ( (elWidth - thumb_width * ratio) * (parseInt(inputVal) -refObjMin) )/ (refObjMax-refObjMin) ) - thumb_width/2 );
+          // ( (( (elWidth - (thumb_width+ thumb_width* ratio) )*(parseInt(inputVal) -refObjMin) )/ (refObjMax-refObjMin) ) );
+          // ( (( (elWidth)*(parseInt(inputVal) +refObjMin) )/ (refObjMax-refObjMin) ) -thumb_width  );
+          // (100 * (parseInt(inputVal) - refObjMin)) / (refObjMax - refObjMin)
+          // ((parseInt(inputVal) - refObjMin) / (refObjMax - refObjMin) ) * elWidth;
+          // ((parseInt(inputVal) - refObjMin) / (refObjMax - refObjMin) ) *90.5;
+          // (refObjMin/100 +((parseInt(inputVal) - refObjMin) / (refObjMax - refObjMin) )) * (100 -refObjMax );
+
+          // ratio = (value - el.min) / (el.max - el.min)
+          // thumbSize / 2 + ratio * 100% - ration * thumbSize
+          // calc(${thumbSize / 10}px + ${ratio * 100} - ${ratio} * ${thumbSize}px)
+          
+          // ((thumb_width/2) + ratio * 100  - ratio * thumb_width);
+          // (((thumb_width/2) + ratio * 100  - ratio * thumb_width) * (elWidth-thumb_width)) / 100;
+
+          // ( (((thumb_width/2) + ratio * 100  - ratio * thumb_width) * (elWidth)) / 100) - thumb_width;
+          // (( (elWidth - thumb_width)*((thumb_width/2) + ratio * 100  - ratio * thumb_width)) / 100) ;
+          // ( ((parseInt(inputVal) - refObjMin) / (refObjMax - refObjMin) ) ) * (100 -refObjMax );
+          //  (refObjMax - refObjMin) * (parseInt(inputVal) - refObjMin);
+          // ((parseInt(inputVal) - refObjMin) * 100) / (refObjMin - refObjMax)
+        // const leftOutput =
+        //   (parseInt(inputVal) + refObjMin) / (refObjMin + refObjMax) + unit;
+
+        // console.log(parseFloat(leftOutput) - (10 - bubbleWidthToTrackWidth));
+        // console.log(parseFloat(leftOutput) - 10);
+        // console.log(ratio);
+        // console.log(parseFloat(leftOutput));
+        // console.log(((parseFloat(leftOutput)- 10)/elWidth)*100 );
         dispatch({
           type: "outputStyle",
-          payload: elWidth * parseFloat(leftOutput) - 7,
+          // payload: elWidth * parseFloat(leftOutput) - 7,
+          // payload: parseFloat(leftOutput)- (10 - bubbleWidthToTrackWidth) +unit,
+          // payload: (parseFloat(leftOutput)- 10)*elWidth +"px",
+          // payload: parseFloat(leftOutput) +"%",
+          payload: parseFloat(leftOutput) +"px",
+          // payload: parseFloat(leftOutput) +unit,
         });
         return false;
       }
@@ -309,11 +382,13 @@ function App() {
     dispatch({ type: "validationFinished", payload: "not" });
 
     if (e.target.type === "range") {
-      getOutputStyle(e.target.value, e, e.target.name, "px");
+      // getOutputStyle(e.target.value, e, "px");
+      getOutputStyle(e.target.value, e, "%");
     }
 
     // show the photo when the 'type' has been chosen
     if (e.target.name === "type") {
+      inputRef.current = [];
       // photoRef.current.classList.remove("hidden", "no-display");
       switch (e.target.value) {
         case "pizza":
@@ -359,7 +434,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputRef.current);
+    // console.log(inputRef.current);
     dispatch({ type: "validationFinished", payload: "not" });
     const dataToValidate = await chooseDataToValidate(type.val);
     const sizeOfObjectToValid = Object.keys(dataToValidate).length;
@@ -367,7 +442,7 @@ function App() {
       type: "sizeOfSubmittedObject",
       payload: sizeOfObjectToValid,
     });
-    const replayCheck = await onValidation(dataToValidate, sizeOfObjectToValid, inputRef);
+    const replayCheck = await onValidation(dataToValidate, sizeOfObjectToValid);
 
     // create an object to be sent
     for (let eachProp in dataToValidate) {
@@ -397,7 +472,7 @@ function App() {
     if (el && !inputRef.current.includes(el)) {
       inputRef.current.push(el);
     }
-  }, []);
+  }, [type]);
 
   const image = (
     <img

@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useMemo,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useContext, useMemo } from "react";
 import { DishContext } from "../App";
 
 function Input(props) {
@@ -12,7 +6,17 @@ function Input(props) {
   const state = dishContext.onState;
   const addToInputRef = dishContext.onAddToInputRef;
   const handleChanging = dishContext.onChanging;
-  const { type, outputStyle, loading } = state;
+  const {
+    name,
+    preparation_time,
+    type,
+    no_of_slices,
+    diameter,
+    spiciness_scale,
+    slices_of_bread,
+    outputStyle,
+    loading,
+  } = state;
 
   const {
     onTagType,
@@ -97,12 +101,11 @@ function Input(props) {
             ref={addToInputRef}
             value={state[onName]["val"]}
             onChange={handleChanging}
-            onKeyDown={handleChanging}
           />
         </div>
       </div>
     );
-  }, [state]);
+  }, [preparation_time, type, no_of_slices, diameter, name, slices_of_bread]);
 
   const range = useMemo(() => {
     return (
@@ -125,15 +128,18 @@ function Input(props) {
             ref={addToInputRef}
             value={state[onName]["val"]}
             onChange={handleChanging}
-            onKeyDown={handleChanging}
           />
-          <output className="bubble" style={outputStyle}>
+          <output
+            className="bubble"
+            style={outputStyle}
+            htmlFor="spiciness_scale"
+          >
             {state[onName]["val"]}
           </output>
         </div>
       </div>
     );
-  }, [state]);
+  }, [type, spiciness_scale, outputStyle]);
 
   return (
     <>

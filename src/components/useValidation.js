@@ -23,7 +23,7 @@ const useValidation = (dispatch) => {
   };
 
   // main validation function
-  const onValidation = (dataToCheck, size, inputRef) => {
+  const onValidation = (dataToCheck, size) => {
     arrayOfAllChecksValue.current = [];
     return new Promise((resolve, reject) => {
       let count = 0;
@@ -35,21 +35,9 @@ const useValidation = (dispatch) => {
           .toString()
           .split(" ")
           .join("");
-        // let min, max;
 
-        // inputRef.current.forEach((el) => {
-        //   const nameAttr = el.getAttribute("name");
-        //   console.log(nameAttr);
-        //   const typeAttr = el.getAttribute("type");
-        //   console.log(typeAttr);
-        //   console.log(el.getAttribute("min"));
-
-        //   if(nameAttr === eachProp){
-        //     console.log("nameAttr === eachProp")
-        //   }
-        // });
-
-        if (valueWithoutSpaces.length <= 0) {
+          // if there is no data or it is NaN though should be a number
+        if (valueWithoutSpaces.length <= 0 || valueWithoutSpaces === "NaN") {
           arrayOfAllChecksValue.current.push(false);
           dispatch({
             type: `${eachProp}_check`,
@@ -89,41 +77,45 @@ const useValidation = (dispatch) => {
                   payload: "Please use only numbers",
                 });
               } else {
-                arrayOfAllChecksValue.current.push(true);
-                dispatch({ type: `${eachProp}_check`, payload: "ok" });
-              }
+                // if the value is NUMERIC, CHECK IF THE VALUE IS NOT TOO BIG OR NOT TOO SMALL accordingly its 'min' and 'max' attributes set in the input attributes and in the state
+                let valueWithoutSpacesToNumber;
 
-// if the value is NUMERIC, CHECK IF THE VALUE IS NOT TOO BIG OR NOT TOO SMALL accordingly its 'min' and 'max' attributes set in the input attributes and in the state
-              let valueWithoutSpacesToNumber;
+                if (eachProp === "intNumber") {
+                  valueWithoutSpacesToNumber = parseInt(valueWithoutSpaces);
+                } else {
+                  valueWithoutSpacesToNumber = parseFloat(valueWithoutSpaces);
+                }
+                let min, max;
+                if (
+                  dataToCheck[eachProp]["min"] !== null &&
+                  dataToCheck[eachProp]["min"] !== undefined
+                ) {
+                  min = dataToCheck[eachProp]["min"];
+                }
+                if (
+                  dataToCheck[eachProp]["max"] !== null &&
+                  dataToCheck[eachProp]["max"] !== undefined
+                ) {
+                  max = dataToCheck[eachProp]["max"];
+                }
+                // console.log(min, " ", max);
 
-              if (eachProp === "intNumber") {
-                valueWithoutSpacesToNumber = parseInt(valueWithoutSpaces);
-              } else {
-                valueWithoutSpacesToNumber = parseFloat(valueWithoutSpaces);
-              }
-              console.log(valueWithoutSpaces);
-              console.log(valueWithoutSpacesToNumber);
-              let min, max;
-              if(dataToCheck[eachProp]["min"] !== null && dataToCheck[eachProp]["min"] !== undefined){
-                min = dataToCheck[eachProp]["min"];
-              }
-              if(dataToCheck[eachProp]["max"] !== null && dataToCheck[eachProp]["max"] !== undefined){
-                max = dataToCheck[eachProp]["max"];
-              }
-              console.log(min, " ", max)
-
-              if (valueWithoutSpacesToNumber < min) {
-                arrayOfAllChecksValue.current.push(false);
-                dispatch({
-                  type: `${eachProp}_check`,
-                  payload: "The number is too small",
-                });
-              } else if (valueWithoutSpacesToNumber > max) {
-                arrayOfAllChecksValue.current.push(false);
-                dispatch({
-                  type: `${eachProp}_check`,
-                  payload: "The number is too big",
-                });
+                if (valueWithoutSpacesToNumber < min) {
+                  arrayOfAllChecksValue.current.push(false);
+                  dispatch({
+                    type: `${eachProp}_check`,
+                    payload: "The number is too small",
+                  });
+                } else if (valueWithoutSpacesToNumber > max) {
+                  arrayOfAllChecksValue.current.push(false);
+                  dispatch({
+                    type: `${eachProp}_check`,
+                    payload: "The number is too big",
+                  });
+                } else {
+                  arrayOfAllChecksValue.current.push(true);
+                  dispatch({ type: `${eachProp}_check`, payload: "ok" });
+                }
               }
 
               break;
