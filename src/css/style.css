@@ -106,6 +106,16 @@ input[type="range"]:focus::-ms-fill-upper {
   padding: 2px 8px;
   position: absolute;
   border-radius: 4px;
+  left: 2.07%;
+  display: inline-block;
+  text-align: center;
+  width: 32px;
+  max-width: 32px;
+  padding: 4px;
+}
+
+#spiciness_scale {
+  margin-top: 14px;
 }
 
 label {
@@ -146,6 +156,12 @@ form {
           box-sizing: border-box;
   margin: 0 0;
   padding: 0 0;
+}
+
+:root {
+  --thumb-width: 16;
+  --thumb-border-width: 1;
+  --bubble-width: 32;
 }
 
 body {
@@ -219,6 +235,20 @@ form {
   width: auto;
   margin-top: 3rem;
   margin-left: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
 }
 
 .row {
@@ -334,16 +364,9 @@ form {
   border-radius: 0.25rem;
 }
 
-@media all and (max-width: 770px) {
-  .image {
-    margin-left: 0.5rem;
-  }
-}
-
 @media all and (max-width: 736px) {
   .image {
     margin-top: 1rem;
-    margin-left: 0.5rem;
   }
 }
 

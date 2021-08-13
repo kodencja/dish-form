@@ -10,8 +10,9 @@ const useValidation = (dispatch) => {
   const isValidTime = (time) => {
     checkTimeLength.current = "";
     if (time.length < 8) {
+      console.log("short time");
       time = time + ":00";
-    }
+    } 
 
     if (time < "00:15:00") {
       checkTimeLength.current = "We need at least 15 min to prepare the dish!";
@@ -19,14 +20,15 @@ const useValidation = (dispatch) => {
     const regexpAll = new RegExp(
       /^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/
     );
-    return regexpAll.test(time);
+
+    return {test: regexpAll.test(time), time: time};
   };
 
   // main validation function
   const onValidation = (dataToCheck, size) => {
     arrayOfAllChecksValue.current = [];
     return new Promise((resolve, reject) => {
-      let count = 0;
+      let count = 0, timeChecked;
       for (let eachProp in dataToCheck) {
         count++;
 
@@ -36,18 +38,20 @@ const useValidation = (dispatch) => {
           .split(" ")
           .join("");
 
-          // if there is no data or it is NaN though should be a number
+        // if there is no data or it is NaN though should be a number
         if (valueWithoutSpaces.length <= 0 || valueWithoutSpaces === "NaN") {
           arrayOfAllChecksValue.current.push(false);
           dispatch({
-            type: `${eachProp}_check`,
+            type: "input_check",
+            nameObj: `${eachProp}`,
             payload: "This field has to be filled in",
           });
           resolve(arrayOfAllChecksValue.current);
         } else if (valueWithoutSpaces.length > 30) {
           arrayOfAllChecksValue.current.push(false);
           dispatch({
-            type: `${eachProp}_check`,
+            type: "input_check",
+            nameObj: `${eachProp}`,
             payload: "Use max 30 characters",
           });
           resolve(arrayOfAllChecksValue.current);
@@ -58,12 +62,17 @@ const useValidation = (dispatch) => {
               if (!validator.isAlpha(valueWithoutSpaces)) {
                 arrayOfAllChecksValue.current.push(false);
                 dispatch({
-                  type: `${eachProp}_check`,
+                  type: "input_check",
+                  nameObj: `${eachProp}`,
                   payload: "Please use only letters",
                 });
               } else {
                 arrayOfAllChecksValue.current.push(true);
-                dispatch({ type: `${eachProp}_check`, payload: "ok" });
+                dispatch({
+                  type: "input_check",
+                  nameObj: `${eachProp}`,
+                  payload: "ok",
+                });
               }
               break;
 
@@ -73,7 +82,8 @@ const useValidation = (dispatch) => {
               if (!validator.isNumeric(valueWithoutSpaces)) {
                 arrayOfAllChecksValue.current.push(false);
                 dispatch({
-                  type: `${eachProp}_check`,
+                  type: "input_check",
+                  nameObj: `${eachProp}`,
                   payload: "Please use only numbers",
                 });
               } else {
@@ -103,42 +113,57 @@ const useValidation = (dispatch) => {
                 if (valueWithoutSpacesToNumber < min) {
                   arrayOfAllChecksValue.current.push(false);
                   dispatch({
-                    type: `${eachProp}_check`,
+                    type: "input_check",
+                    nameObj: `${eachProp}`,
                     payload: "The number is too small",
                   });
+
                 } else if (valueWithoutSpacesToNumber > max) {
                   arrayOfAllChecksValue.current.push(false);
                   dispatch({
-                    type: `${eachProp}_check`,
+                    type: "input_check",
+                    nameObj: `${eachProp}`,
                     payload: "The number is too big",
                   });
                 } else {
                   arrayOfAllChecksValue.current.push(true);
-                  dispatch({ type: `${eachProp}_check`, payload: "ok" });
+                  dispatch({
+                    type: "input_check",
+                    nameObj: `${eachProp}`,
+                    payload: "ok",
+                  });
                 }
               }
 
               break;
 
             case "time":
-              if (!isValidTime(valueWithoutSpaces)) {
+              const { test, time } = isValidTime(valueWithoutSpaces);
+              timeChecked = time;
+              if (!test) {
                 arrayOfAllChecksValue.current.push(false);
                 dispatch({
-                  type: `${eachProp}_check`,
+                  type: "input_check",
+                  nameObj: `${eachProp}`,
                   payload: "Please use only numbers in time format",
                 });
               } else if (
-                isValidTime(valueWithoutSpaces) &&
+                test &&
                 checkTimeLength.current !== ""
               ) {
                 arrayOfAllChecksValue.current.push(false);
                 dispatch({
-                  type: `${eachProp}_check`,
+                  type: "input_check",
+                  nameObj: `${eachProp}`,
                   payload: checkTimeLength.current,
                 });
               } else {
                 arrayOfAllChecksValue.current.push(true);
-                dispatch({ type: `${eachProp}_check`, payload: "ok" });
+                dispatch({
+                  type: "input_check",
+                  nameObj: `${eachProp}`,
+                  payload: "ok",
+                });
               }
               break;
 
@@ -148,7 +173,8 @@ const useValidation = (dispatch) => {
         }
 
         if (count >= size) {
-          resolve(arrayOfAllChecksValue.current);
+          // resolve(arrayOfAllChecksValue.current);
+          resolve({arrayOfAllChecksVal: arrayOfAllChecksValue.current, time: timeChecked });
         }
       }
     });
