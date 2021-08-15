@@ -121,7 +121,7 @@ input[type="range"] {
   border-radius: $bubble-radius;
   // left: 0%;
   // left: 6px;
-  left: 2.07%;
+  // left: 2.07%;
   display: inline-block;
   text-align: center;
   width: 32px;
@@ -149,16 +149,105 @@ label {
   font-weight: weight("fatter");
 }
 
+// .form-group {
+.mrg-x-auto {
+  margin-left: auto;
+  margin-right: auto;
+  // transition: all $short-time ease-out;
+}
+
+.range {
+  width: 250px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.number-width {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-control {
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: $input-padd-y $input-padd-x;
+  width: auto;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  margin-top: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &::-ms-expand {
+    background-color: transparent;
+    border: 0;
+  }
+
+  &:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #495057;
+  }
+
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  &::-webkit-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+  }
+
+  &::-moz-placeholder {
+    color: #6c757d;
+    opacity: 1;
+  }
+
+  &:-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+  }
+
+  &::-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1;
+  }
+
+  &::placeholder {
+    color: #6c757d;
+    opacity: 1;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: $gray-200;
+    opacity: 0.9;
+  }
+}
+
 .input-cont {
   //   width: fit-content;
   overflow: hidden;
 }
 
+#slices_of_bread {
+  width: 120px;
+}
+
 .input-block {
   width: auto;
   position: relative;
-  @include paddMrg("margin", 0, 20px, 10px, 20px);
-  transition: transform $short-time ease-out;
+  @include paddMrg("margin", 0, 10px, 10px, 10px);
+  // transition: transform $short-time ease-out;
 }
 
 form {

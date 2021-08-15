@@ -6,6 +6,7 @@ function Input(props) {
   const state = dishContext.onState;
   const addToInputRef = dishContext.onAddToInputRef;
   const handleChanging = dishContext.onChanging;
+
   const {
     name,
     preparation_time,
@@ -54,35 +55,37 @@ function Input(props) {
         }
       });
     } else {
-      return false;
+      return null;
     }
   }, [type]);
 
   const select = useMemo(() => {
-    return (
-      <div className="form-group input-cont">
-        <div className="input-block">
-          <label htmlFor={onName}>{onTitle}</label>
-          <select
-            className={onClass}
-            name={onName}
-            aria-label={onAria}
-            id={onID}
-            required={onRequired}
-            ref={addToInputRef}
-            value={state[onName]["val"]}
-            onChange={handleChanging}
-          >
-            {options}
-          </select>
+    if (onName === "type") {
+      return (
+        <div className="form-group input-cont">
+          <div className="input-block">
+            <label htmlFor={onName}>{onTitle}</label>
+            <select
+              className={onClass}
+              name={onName}
+              aria-label={onAria}
+              id={onID}
+              required={onRequired}
+              ref={addToInputRef}
+              value={state[onName]["val"]}
+              onChange={handleChanging}
+            >
+              {options}
+            </select>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else return null;
   }, [type, loading]);
 
   const input = useMemo(() => {
-    return (
-      <div className="form-group input-cont">
+    if (onName !== "spiciness_scale") {
+      return (
         <div className="input-block">
           <label htmlFor={onName}>{onTitle}</label>
           <input
@@ -103,13 +106,23 @@ function Input(props) {
             onChange={handleChanging}
           />
         </div>
-      </div>
-    );
-  }, [preparation_time, type, no_of_slices, diameter, name, slices_of_bread]);
+      );
+    } else {
+      return null;
+    }
+  }, [
+    preparation_time,
+    type.val,
+    no_of_slices,
+    diameter,
+    name,
+    slices_of_bread,
+    onName,
+  ]);
 
   const range = useMemo(() => {
-    return (
-      <div className="form-group input-cont">
+    if (onName === "spiciness_scale") {
+      return (
         <div className="input-block">
           <label htmlFor={onName}>{onTitle}</label>
           <input
@@ -137,8 +150,10 @@ function Input(props) {
             {state[onName]["val"]}
           </output>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }, [type, spiciness_scale, outputStyle]);
 
   return (

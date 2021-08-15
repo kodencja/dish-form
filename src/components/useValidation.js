@@ -10,7 +10,6 @@ const useValidation = (dispatch) => {
   const isValidTime = (time) => {
     checkTimeLength.current = "";
     if (time.length < 8) {
-      console.log("short time");
       time = time + ":00";
     } 
 
@@ -26,6 +25,7 @@ const useValidation = (dispatch) => {
 
   // main validation function
   const onValidation = (dataToCheck, size) => {
+
     arrayOfAllChecksValue.current = [];
     return new Promise((resolve, reject) => {
       let count = 0, timeChecked;
@@ -46,7 +46,7 @@ const useValidation = (dispatch) => {
             nameObj: `${eachProp}`,
             payload: "This field has to be filled in",
           });
-          resolve(arrayOfAllChecksValue.current);
+          resolve({arrayOfAllChecksVal: arrayOfAllChecksValue.current, time: dataToCheck.preparation_time.val });
         } else if (valueWithoutSpaces.length > 30) {
           arrayOfAllChecksValue.current.push(false);
           dispatch({
@@ -54,7 +54,7 @@ const useValidation = (dispatch) => {
             nameObj: `${eachProp}`,
             payload: "Use max 30 characters",
           });
-          resolve(arrayOfAllChecksValue.current);
+          resolve({arrayOfAllChecksVal: arrayOfAllChecksValue.current, time: dataToCheck.preparation_time.val });
         } else {
           // run validation accordingly to the input 'type' ('sort' in state)
           switch (dataToCheck[eachProp]["sort"]) {
@@ -108,7 +108,6 @@ const useValidation = (dispatch) => {
                 ) {
                   max = dataToCheck[eachProp]["max"];
                 }
-                // console.log(min, " ", max);
 
                 if (valueWithoutSpacesToNumber < min) {
                   arrayOfAllChecksValue.current.push(false);
@@ -173,7 +172,6 @@ const useValidation = (dispatch) => {
         }
 
         if (count >= size) {
-          // resolve(arrayOfAllChecksValue.current);
           resolve({arrayOfAllChecksVal: arrayOfAllChecksValue.current, time: timeChecked });
         }
       }

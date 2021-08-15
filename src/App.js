@@ -20,7 +20,7 @@ const initialState = {
   outputStyle: { left: "0" },
   sizeOfSubmittedObject: 0,
   validationFinished: "not",
-  finalResponse: "",
+  finalResponse: "Hungry?",
   loading: false,
 };
 
@@ -62,6 +62,7 @@ const reducer = (state, action) => {
         diameter: { ...state.diameter, val: 0.1 },
         slices_of_bread: { ...state.slices_of_bread, val: 1 },
         spiciness_scale: { ...state.spiciness_scale, val: 1 },
+        loading: false,
       };
     default:
       return state;
@@ -73,6 +74,9 @@ function App() {
 
   // custom hook for validation of data form
   const { onValidation } = useValidation(dispatch);
+
+  // main title ref
+  const titleRef = useRef();
 
   // array of inputs' refs
   const inputRef = useRef([]);
@@ -103,17 +107,18 @@ function App() {
     loading,
   } = state;
 
-  // useEffect(() => {
-  //   // console.log(finalResponse);
-  // });
+  // handle main title appearing
+  useEffect(()=>{
+    titleRef.current.classList.remove("hide-upper");
+  },[])
 
   useEffect(() => {
     // set a left distance of bubble with the default value - dedicated to "range" type input
     if (inputRef.current !== undefined && inputRef.current !== null) {
       inputRef.current.forEach((el) => {
 
-        const elName = el.getAttribute("type");
-        if (elName === "range") {
+        const elType = el.getAttribute("type");
+        if (elType === "range") {
           const elVal = el.getAttribute("value");
           getOutputStyle(elVal, el, "%");
         }
@@ -159,7 +164,7 @@ function App() {
           console.log(response.data);
           dataToSend.current = "";
 
-          dispatch({ type: "one_value", nameObj: "loading", payload: false });
+          // dispatch({ type: "one_value", nameObj: "loading", payload: false });
           answerRef.current.classList.remove("wait");
           answerRef.current.classList.add("fine");
           dispatch({ type: "reset", payload: "" });
@@ -286,6 +291,13 @@ function App() {
         nameObj: e.target.name,
         payload: parseFloat(e.target.value),
       });
+    } else if(nameTrg === "type"){
+        inputRef.current = [];
+        dispatch({
+          type: "input",
+          nameObj: e.target.name,
+          payload: e.target.value,
+        });
     } else {
       dispatch({
         type: "input",
@@ -296,14 +308,14 @@ function App() {
 
     // clean the finalResponse text while ordering a new product
     if (validationFinished !== "not") {
-      dispatch({ type: "one_value", nameObj: "finalResponse", payload: "" });
+      // dispatch({ type: "one_value", nameObj: "finalResponse", payload: "" });
+      dispatch({ type: "one_value", nameObj: "finalResponse", payload: "Hungry?" });
+      dispatch({
+        type: "one_value",
+        nameObj: "validationFinished",
+        payload: "not",
+      });
     }
-
-    dispatch({
-      type: "one_value",
-      nameObj: "validationFinished",
-      payload: "not",
-    });
 
     if (e.target.type === "range") {
       getOutputStyle(e.target.value, e.target, "%");
@@ -355,8 +367,9 @@ function App() {
       nameObj: "sizeOfSubmittedObject",
       payload: sizeOfObjectToValid,
     });
-    // const replayCheck = await onValidation(dataToValidate, sizeOfObjectToValid);
+
     const { arrayOfAllChecksVal, time } = await onValidation(dataToValidate, sizeOfObjectToValid);
+
 
     // create an object to be sent
     for (let eachProp in dataToValidate) {
@@ -420,7 +433,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <h2 className="title">Hungry? Let's have a delicious meal!</h2>
+        <h2 className="title hide-upper" ref={titleRef}>Let's have a delicious meal!</h2>
         <div className="dishes flex" ref={dishesRef}>
           <DishContext.Provider
             value={{
@@ -428,18 +441,14 @@ function App() {
               onDispatch: dispatch,
               onChanging: handleChanging,
               onAddToInputRef: addToInputRef,
-              onInputRef: inputRef,
+              onInputRef: inputRef.current,
               onAddToFeedbackRef: addToFeedbackRef,
             }}
           >
-            <Form onType={type.val} onSubmit={handleSubmit} ref={btnRef} />
+            <Form onTypeVal={type.val} onSubmit={handleSubmit} ref={btnRef} />
           </DishContext.Provider>
           <div className="image answer" ref={answerRef}>
-            {loading
-              ? "Wait..."
-              : validationFinished !== "not"
-              ? finalResponse
-              : image}
+            { !loading ? (type.val != "" ? image  : finalResponse) : "Wait..."}
           </div>
         </div>
       </div>
@@ -448,3 +457,10 @@ function App() {
 }
 
 export default App;
+
+// {loading
+//   ? "Wait..."
+//   : validationFinished !== "not"
+//   ? finalResponse
+//   : image}
+      // : type.val === "" && validationFinished === "not"
