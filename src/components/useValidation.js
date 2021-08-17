@@ -71,7 +71,7 @@ const useValidation = (dispatch) => {
                 dispatch({
                   type: "input_check",
                   nameObj: `${eachProp}`,
-                  payload: "ok",
+                  payload: "",
                 });
               }
               break;
@@ -129,7 +129,7 @@ const useValidation = (dispatch) => {
                   dispatch({
                     type: "input_check",
                     nameObj: `${eachProp}`,
-                    payload: "ok",
+                    payload: "",
                   });
                 }
               }
@@ -161,7 +161,7 @@ const useValidation = (dispatch) => {
                 dispatch({
                   type: "input_check",
                   nameObj: `${eachProp}`,
-                  payload: "ok",
+                  payload: "",
                 });
               }
               break;

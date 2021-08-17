@@ -138,14 +138,15 @@ input[type="range"] {
 label {
   @include paddMrg(
     "margin",
-    distance("small-quite"),
+    distance("quite-normal"),
     distance("zero"),
-    distance("very-small"),
+    distance("small-quite"),
     distance("zero")
   );
   text-align: center;
   display: block !important;
-  color: rgb(48, 95, 180);
+  color: #004da5;
+  // color: rgb(48, 95, 180);
   font-weight: weight("fatter");
 }
 
@@ -172,7 +173,7 @@ label {
 .form-control {
   height: calc(1.5em + 0.5rem + 2px);
   padding: $input-padd-y $input-padd-x;
-  width: auto;
+  max-width: 90%;
   font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.5;

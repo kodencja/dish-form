@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useMemo, useRef } from "react";
 import { DishContext } from "../App";
 import Input from "./Input";
-import Feedback from "./Feedback";
 
 const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
   const dishContext = useContext(DishContext);
-  const { addToFeedbackRef } = dishContext.onAddToFeedbackRef;
   const state = dishContext.onState;
+  const handleChanging = dishContext.onChanging;
+  const addToInputRef = dishContext.onAddToInputRef;
 
   const forPizzaRef = useRef();
   const forSoupRef = useRef();
@@ -24,6 +24,14 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
     spiciness_scale,
     slices_of_bread,
   } = state;
+
+  useEffect(() => {
+    // console.log(no_of_slices);
+    // console.log(spiciness_scale);
+    // console.log(spiciness_scale["val"]);
+    // console.log(slices_of_bread);
+    // console.log(slices_of_bread["val"]);
+  });
 
   // handle input appearing animation
   useEffect(() => {
@@ -75,52 +83,48 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
           <div className="flex hide-up" ref={forPizzaRef}>
             <div className="one-column">
               <Input
-                onTagType="input"
-                onTitle="No of slices"
-                onName="no_of_slices"
-                onType="number"
-                onID="no_of_slices"
-                onClass="form-control"
-                onPlaceHold={null}
-                onStep={1}
-                onAria="no_of_slices"
-                onRequired={onTypeVal === "pizza" ? true : false}
-                onDataSizing={null}
-                onMin={1}
-                onMax={30}
-              />
-              <Feedback
-                msgResponse={no_of_slices.check}
-                onAddToFeedbackRef={addToFeedbackRef}
+                tagType="input"
+                title="No of slices"
+                name="no_of_slices"
+                type="number"
+                id="no_of_slices"
+                className="form-control"
+                step={1}
+                aria-label="no_of_slices"
+                required={onTypeVal === "pizza" ? true : false}
+                min={1}
+                max={30}
+                value={no_of_slices["val"]}
+                onChange={handleChanging}
+                ref={addToInputRef}
+                errorMsg={no_of_slices.check}
               />
             </div>
 
             <div className="one-column">
               <Input
-                onTagType="input"
-                onTitle="diameter"
-                onName="diameter"
-                onType="number"
-                onID="diameter"
-                onClass="form-control"
-                onPlaceHold={null}
-                onStep={0.1}
-                onAria="diameter"
-                onRequired={onTypeVal === "pizza" ? true : false}
-                onDataSizing={null}
-                onMin={0.1}
-                onMax={50}
-              />
-              <Feedback
-                msgResponse={diameter.check}
-                onAddToFeedbackRef={addToFeedbackRef}
+                tagType="input"
+                title="diameter"
+                name="diameter"
+                type="number"
+                id="diameter"
+                className="form-control"
+                step={0.1}
+                aria-label="diameter"
+                required={onTypeVal === "pizza" ? true : false}
+                min={0.1}
+                max={50}
+                value={diameter["val"]}
+                onChange={handleChanging}
+                ref={addToInputRef}
+                errorMsg={diameter.check}
               />
             </div>
           </div>
         </div>
       </div>
     );
-  }, [type]);
+  }, [type, diameter, no_of_slices]);
 
   const forSoup = useMemo(() => {
     return (
@@ -130,30 +134,28 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
             {/* <div className="range input-cont hide-up" ref={forSoupRef}> */}
             {/* <div className="mrg-x-auto hide-up" ref={forSoupRef}> */}
             <Input
-              onTagType="range"
-              onTitle="Spiciness scale"
-              onName="spiciness_scale"
-              onType="range"
-              onID="spiciness_scale"
-              onClass="form-control form-control-range"
-              onPlaceHold={null}
-              onStep={1}
-              onAria="spiciness_scale"
-              onRequired={onTypeVal === "soup" ? true : false}
-              onDataSizing="px"
-              onMin={1}
-              onMax={10}
-            />
-
-            <Feedback
-              msgResponse={spiciness_scale.check}
-              onAddToFeedbackRef={addToFeedbackRef}
+              tagType="range"
+              title="Spiciness scale"
+              name="spiciness_scale"
+              type="range"
+              id="spiciness_scale"
+              className="form-control form-control-range"
+              step={1}
+              aria-label="spiciness_scale"
+              required={onTypeVal === "soup" ? true : false}
+              data-sizing="px"
+              min={1}
+              max={10}
+              value={spiciness_scale["val"]}
+              onChange={handleChanging}
+              ref={addToInputRef}
+              errorMsg={spiciness_scale.check}
             />
           </div>
         </div>
       </div>
     );
-  }, [type]);
+  }, [type, spiciness_scale]);
 
   const forSandwich = useMemo(() => {
     return (
@@ -161,29 +163,27 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
         <div className="input-cont">
           <div className="number-width hide-right" ref={forSandwichRef}>
             <Input
-              onTagType="input"
-              onTitle="No of slices"
-              onName="slices_of_bread"
-              onType="number"
-              onID="slices_of_bread"
-              onClass="form-control"
-              onPlaceHold={null}
-              onStep={1}
-              onAria="slices_of_bread"
-              onRequired={onTypeVal === "sandwich" ? true : false}
-              onDataSizing={null}
-              onMin={1}
-              onMax={null}
-            />
-            <Feedback
-              msgResponse={slices_of_bread.check}
-              onAddToFeedbackRef={addToFeedbackRef}
+              tagType="input"
+              title="No of slices"
+              name="slices_of_bread"
+              type="number"
+              id="slices_of_bread"
+              className="form-control"
+              step={1}
+              aria-label="slices_of_bread"
+              required={onTypeVal === "sandwich" ? true : false}
+              min={1}
+              value={slices_of_bread.val}
+              // value={state[slices_of_bread]["val"]}
+              onChange={handleChanging}
+              ref={addToInputRef}
+              errorMsg={slices_of_bread.check}
             />
           </div>
         </div>
       </div>
     );
-  }, [type]);
+  }, [type, slices_of_bread]);
 
   return (
     <form id="dishes-form">
@@ -191,24 +191,19 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
         <div className="input-cont">
           <div className="hide-left narrow-70 mrg-x-auto" ref={nameRef}>
             <Input
-              onTagType="input"
-              onTitle="Dish name"
-              onName="name"
-              onType="text"
-              onID="name"
-              onClass="form-control"
-              onPlaceHold="Type dish name"
-              onStep={null}
-              onAria="name"
-              onRequired={true}
-              onDataSizing={null}
-              onMin={null}
-              onMax={null}
-              onPattern={null}
-            />
-            <Feedback
-              msgResponse={name.check}
-              onAddToFeedbackRef={addToFeedbackRef}
+              tagType="input"
+              title="Dish name"
+              name="name"
+              type="text"
+              id="name"
+              className="form-control"
+              placeholder="Type dish name"
+              aria-label="name"
+              required={true}
+              value={name["val"]}
+              onChange={handleChanging}
+              ref={addToInputRef}
+              errorMsg={name.check}
             />
           </div>
         </div>
@@ -216,24 +211,21 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
         <div className="input-cont">
           <div className="hide-right narrow-70 mrg-x-auto" ref={timeRef}>
             <Input
-              onTagType="input"
-              onTitle="Preparation time"
-              onName="preparation_time"
-              onType="time"
-              onID="preparation_time"
-              onClass="form-control"
-              onPlaceHold={null}
-              onStep={1}
-              onAria="preparation_time"
-              onRequired={true}
-              onDataSizing={null}
-              onMin={"00:15:00"}
-              onMax={null}
-              onPattern={"[0-9]{2}:[0-9]{2}:[0-9]{2}"}
-            />
-            <Feedback
-              msgResponse={preparation_time.check}
-              onAddToFeedbackRef={addToFeedbackRef}
+              tagType="input"
+              title="Preparation time"
+              name="preparation_time"
+              type="time"
+              id="preparation_time"
+              className="form-control"
+              step={1}
+              aria-label="preparation_time"
+              required={true}
+              min={"00:15:00"}
+              pattern={"[0-9]{2}:[0-9]{2}:[0-9]{2}"}
+              value={preparation_time["val"]}
+              onChange={handleChanging}
+              ref={addToInputRef}
+              errorMsg={preparation_time.check}
             />
           </div>
         </div>
@@ -241,19 +233,18 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
         <div className="input-cont">
           <div className="hide-up narrow-70 mrg-x-auto" ref={selectRef}>
             <Input
-              onTagType="select"
-              onTitle="Type"
-              onName="type"
-              onID="type"
-              onClass="form-control form-control-lg"
-              onOptionNames={["default", "pizza", "soup", "sandwich"]}
-              onPlaceHold={null}
-              onAria="type"
-              onRequired={true}
-            />
-            <Feedback
-              msgResponse={type.check}
-              onAddToFeedbackRef={addToFeedbackRef}
+              tagType="select"
+              title="Type"
+              name="type"
+              id="type"
+              className="form-control form-control-lg"
+              optionNames={["default", "pizza", "soup", "sandwich"]}
+              aria-label="type"
+              required={true}
+              value={type["val"]}
+              onChange={handleChanging}
+              ref={addToInputRef}
+              errorMsg={type.check}
             />
           </div>
         </div>
@@ -280,6 +271,7 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
       </div>
     </form>
   );
+  // };
 });
 
 // export default Form;

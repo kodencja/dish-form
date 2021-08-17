@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useRef, useCallback } from "react";
 import Form from "./components/Form";
+// import FormComp from "./components/FormComp";
 import "./App.css";
 import "./css/style.css";
 import useValidation from "./components/useValidation";
@@ -9,7 +10,7 @@ export const DishContext = React.createContext();
 
 // 'val' = value, 'sort' = type of input, 'check' = prop for message got back after validation
 // 'min' and 'max' are attributes of inputs - I put them here so prevent user from manipulating these values in the browser
-const initialState = {
+const inputInitState = {
   name: { val: "", sort: "text", check: "" },
   preparation_time: { val: "00:15:00", sort: "time", check: "" },
   type: { val: "", sort: "text", check: "" },
@@ -17,6 +18,10 @@ const initialState = {
   diameter: { val: 0.1, sort: "floatNumber", check: "", min: 0.1, max: 50 },
   spiciness_scale: { val: 1, sort: "intNumber", check: "", min: 1, max: 10 },
   slices_of_bread: { val: 1, sort: "intNumber", check: "", min: 1 },
+}
+
+const initialState = {
+  ...inputInitState,
   outputStyle: { left: "0" },
   sizeOfSubmittedObject: 0,
   validationFinished: "not",
@@ -55,13 +60,7 @@ const reducer = (state, action) => {
     case "reset":
       return {
         ...state,
-        name: { ...state.name, val: "" },
-        preparation_time: { ...state.preparation_time, val: "00:15:00" },
-        type: { ...state.type, val: "" },
-        no_of_slices: { ...state.no_of_slices, val: 1 },
-        diameter: { ...state.diameter, val: 0.1 },
-        slices_of_bread: { ...state.slices_of_bread, val: 1 },
-        spiciness_scale: { ...state.spiciness_scale, val: 1 },
+        ...inputInitState,
         loading: false,
       };
     default:
@@ -107,13 +106,18 @@ function App() {
     loading,
   } = state;
 
+  useEffect(() => {
+    // console.log(type.val);
+  });
+
   // handle main title appearing
   useEffect(()=>{
+    titleRef.current.classList.add("drop-fast");
     titleRef.current.classList.remove("hide-upper");
   },[])
 
   useEffect(() => {
-    // set a left distance of bubble with the default value - dedicated to "range" type input
+    // call a function to set a left distance of bubble with the default value - dedicated to "range" type input
     if (inputRef.current !== undefined && inputRef.current !== null) {
       inputRef.current.forEach((el) => {
 
@@ -199,7 +203,7 @@ function App() {
 
       inputRef.current.forEach((el) => {
         const elName = el.getAttribute("name");
-        if (state[elName]["check"] === "ok") {
+        if (state[elName]["check"] === "") {
           el.classList.remove("inCorrect");
           el.classList.add("correct");
         } else {
@@ -274,7 +278,25 @@ function App() {
   );
 
   const handleChanging = (e) => {
+
+    // clean the finalResponse text while ordering a new product
+    if (validationFinished !== "not") {
+      // dispatch({ type: "one_value", nameObj: "finalResponse", payload: "" });
+      dispatch({ type: "one_value", nameObj: "finalResponse", payload: "Hungry?" });
+      dispatch({
+        type: "one_value",
+        nameObj: "validationFinished",
+        payload: "not",
+      });
+    }
+
+    if (e.target.type === "range") {
+      getOutputStyle(e.target.value, e.target, "%");
+    }
+
     const nameTrg = e.target.name;
+    // console.log(e.target.name);
+    // console.log(e.target.value);
     if (
       nameTrg === "no_of_slices" ||
       nameTrg === "spiciness_scale" ||
@@ -306,20 +328,7 @@ function App() {
       });
     }
 
-    // clean the finalResponse text while ordering a new product
-    if (validationFinished !== "not") {
-      // dispatch({ type: "one_value", nameObj: "finalResponse", payload: "" });
-      dispatch({ type: "one_value", nameObj: "finalResponse", payload: "Hungry?" });
-      dispatch({
-        type: "one_value",
-        nameObj: "validationFinished",
-        payload: "not",
-      });
-    }
 
-    if (e.target.type === "range") {
-      getOutputStyle(e.target.value, e.target, "%");
-    }
   };
 
   const chooseDataToValidate = (types) => {
@@ -348,6 +357,7 @@ function App() {
   };
 
   const handleSubmit = async (e) => {
+    // console.log(e);
     e.preventDefault();
     // console.log(inputRef.current);
     dispatch({
@@ -423,12 +433,16 @@ function App() {
   const image = (
     <img
       alt={type.val}
-      className="photo"
+      className="photo hanging"
       src={type.val !== "" ? require(`./img/${type.val}.jpg`).default : ""}
-      // style={{ height: "auto", width: "100%" }}
-      // style={{ height: "auto", width: "100%", objectFit: "contain" }}
     />
   );
+
+  // const answerStyle = () => {
+  //   let style;
+  //   validationFinished === "not" && type.val !=="" ? style = {padding: "0px"} : style = {padding: "15px"};
+  //   return style;
+  // };
 
   return (
     <div className="App">
@@ -447,9 +461,14 @@ function App() {
           >
             <Form onTypeVal={type.val} onSubmit={handleSubmit} ref={btnRef} />
           </DishContext.Provider>
-          <div className="image answer" ref={answerRef}>
-            { !loading ? (type.val != "" ? image  : finalResponse) : "Wait..."}
+          <div className="image">
+          <div className="answer mrg-x-auto" ref={answerRef} >
+            {/* { !loading ? (type.val !== "" ? image  : finalResponse) : "Wait..."} */}
+            { !loading ? (validationFinished === "not" && type.val !=="" ? image  : finalResponse) : "Wait..."}
           </div>
+
+          </div>
+
         </div>
       </div>
     </div>
@@ -457,10 +476,3 @@ function App() {
 }
 
 export default App;
-
-// {loading
-//   ? "Wait..."
-//   : validationFinished !== "not"
-//   ? finalResponse
-//   : image}
-      // : type.val === "" && validationFinished === "not"
