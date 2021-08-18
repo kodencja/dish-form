@@ -9,6 +9,11 @@
   padding: 0 0;
 }
 
+html {
+  height: 100vh;
+  // background-color: $track-color;
+}
+
 :root {
   --thumb-width: #{$thumb-width-no};
   --thumb-border-width: #{$thumb-border-width-no};
@@ -16,18 +21,21 @@
 }
 
 body {
-  background-color: whitesmoke;
+  // background-color: whitesmoke;
   color: ghostwhite;
   height: 100%;
-  // background-image: url("../img/cerata1.png");
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
+  background-image: url("../img/cerata1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .container {
   // margin: 50px;
-  background-color: $title-bgr-col;
+  // background-color: $title-bgr-col;
+  backdrop-filter: blur(10px);
+  // background-color: rgba(255, 255, 240, 0.8);
+  background-color: rgba(71, 203, 255, 0.8);
 }
 
 .hidden {
@@ -50,6 +58,9 @@ body {
   // color: darkgreen;
   // color: #00a5ce;
   color: white;
+  // color: ivory;
+  // color: $title-bgr-col;
+  // color: black;
   // background-color: $title-bgr-col;
   padding-top: 30px;
   padding-bottom: 10px;
@@ -69,6 +80,8 @@ body {
   // transform: perspective(500px);
   // margin-left: auto;
   // margin-right: auto;
+  border-top: $dishes-border-width solid ivory;
+  border-bottom: $dishes-border-width solid ivory;
   background-image: url("../img/veg4.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -98,13 +111,13 @@ form {
   text-align: center;
   min-width: 55%;
   width: 55%;
-  // margin-left: 2rem;
-  margin: 1rem 1rem 1rem 2rem;
+  margin: 1rem;
+  // margin: 1rem 1rem 1rem 2rem;
   // background-image: url("../img/veg4.jpg");
   // background-position: center;
   // background-repeat: no-repeat;
   // background-size: cover;
-  background-color: rgba(255, 255, 240, 0.35);
+  background-color: rgba(255, 255, 240, 0.5);
   border-radius: 15px;
   backdrop-filter: blur(10px);
   // filter: brightness(100%);
@@ -116,12 +129,13 @@ form {
   width: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+  margin-bottom: 0.75rem;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  background-color: rgba(255, 255, 240, 0.35);
+  background-color: rgba(255, 255, 240, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -130,7 +144,7 @@ form {
   font-weight: weight("fatter");
   font-size: 1.35rem;
   text-align: center;
-  color: $label-color;
+  color: lighten($label-color, 10%);
   border-radius: 10px;
   padding: 15px;
   transform-origin: 50% 50%;
@@ -161,7 +175,7 @@ form {
 
 .fine {
   // color: blue;
-  color: $label-color;
+  color: lighten($label-color, 10%);
 }
 
 .bad {

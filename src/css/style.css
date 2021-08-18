@@ -17,7 +17,7 @@ input[type="range"]:focus {
 input[type="range"]::-webkit-slider-runnable-track {
   -webkit-box-shadow: 2px 2px 2px #222, 0px 0px 2px #2f2f2f;
           box-shadow: 2px 2px 2px #222, 0px 0px 2px #2f2f2f;
-  background: #00a100;
+  background: #2190da;
   border-radius: 2px;
   border: 1px solid black;
 }
@@ -39,12 +39,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #00bb00;
+  background: #349be0;
 }
 
 input[type="range"]::-moz-range-track {
   box-shadow: 2px 2px 2px #222, 0px 0px 2px #2f2f2f;
-  background: #00a100;
+  background: #2190da;
   border-radius: 2px;
   border: 1px solid black;
 }
@@ -67,14 +67,14 @@ input[type="range"]::-ms-track {
 }
 
 input[type="range"]::-ms-fill-lower {
-  background: #008800;
+  background: #1e81c4;
   border: 1px solid black;
   border-radius: 4px;
   box-shadow: 2px 2px 2px #222, 0px 0px 2px #2f2f2f;
 }
 
 input[type="range"]::-ms-fill-upper {
-  background: #00a100;
+  background: #2190da;
   border: 1px solid black;
   border-radius: 4px;
   box-shadow: 2px 2px 2px #222, 0px 0px 2px #2f2f2f;
@@ -91,11 +91,11 @@ input[type="range"]::-ms-thumb {
 }
 
 input[type="range"]:focus::-ms-fill-lower {
-  background: #00a100;
+  background: #2190da;
 }
 
 input[type="range"]:focus::-ms-fill-upper {
-  background: #00bb00;
+  background: #349be0;
 }
 
 .bubble {
@@ -149,7 +149,6 @@ label {
 .form-control {
   height: calc(1.5em + 0.5rem + 2px);
   padding: 0.375rem 0.75rem;
-  max-width: 90%;
   font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.5;
@@ -509,6 +508,10 @@ form {
   padding: 0 0;
 }
 
+html {
+  height: 100vh;
+}
+
 :root {
   --thumb-width: 16;
   --thumb-border-width: 1;
@@ -516,13 +519,18 @@ form {
 }
 
 body {
-  background-color: whitesmoke;
   color: ghostwhite;
   height: 100%;
+  background-image: url("../img/cerata1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .container {
-  background-color: #00a5ce;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  background-color: rgba(71, 203, 255, 0.8);
 }
 
 .hidden {
@@ -559,6 +567,8 @@ body {
 
 .dishes {
   width: 100%;
+  border-top: 5px solid ivory;
+  border-bottom: 5px solid ivory;
   background-image: url("../img/veg4.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -587,8 +597,8 @@ form {
   text-align: center;
   min-width: 55%;
   width: 55%;
-  margin: 1rem 1rem 1rem 2rem;
-  background-color: rgba(255, 255, 240, 0.35);
+  margin: 1rem;
+  background-color: rgba(255, 255, 240, 0.5);
   border-radius: 15px;
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
@@ -600,6 +610,7 @@ form {
   width: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+  margin-bottom: 0.75rem;
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -611,7 +622,7 @@ form {
       -ms-flex-pack: center;
           justify-content: center;
   border-radius: 10px;
-  background-color: rgba(255, 255, 240, 0.35);
+  background-color: rgba(255, 255, 240, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -620,7 +631,7 @@ form {
   font-weight: 600;
   font-size: 1.35rem;
   text-align: center;
-  color: #004da5;
+  color: #0065d8;
   border-radius: 10px;
   padding: 15px;
   -webkit-transform-origin: 50% 50%;
@@ -657,7 +668,7 @@ form {
 }
 
 .fine {
-  color: #004da5;
+  color: #0065d8;
 }
 
 .bad {

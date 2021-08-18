@@ -72,7 +72,3 @@
 @function color-mixed($color1, $color2, $weight) {
   @return mix($color1, $color2, $weight);
 }
-
-// @function set-padding-y($height) {
-//   @return
-// }
