@@ -3,6 +3,11 @@
 @import "./inputs";
 @import "./anims";
 
+%fatter-normal {
+  font-weight: weight("fatter") !important;
+  letter-spacing: 1px !important;
+}
+
 * {
   box-sizing: border-box;
   margin: 0 0;
@@ -35,7 +40,8 @@ body {
   // background-color: $title-bgr-col;
   backdrop-filter: blur(10px);
   // background-color: rgba(255, 255, 240, 0.8);
-  background-color: rgba(71, 203, 255, 0.8);
+  // background-color: rgba(71, 203, 255, 0.8);
+  background-color: rgba(37, 172, 226, 0.8);
 }
 
 .hidden {
@@ -131,6 +137,7 @@ form {
   padding-right: 1rem;
   margin-bottom: 0.75rem;
   text-align: center;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,15 +148,19 @@ form {
 }
 
 .answer {
-  font-weight: weight("fatter");
-  font-size: 1.35rem;
   text-align: center;
-  color: lighten($label-color, 10%);
   border-radius: 10px;
   padding: 15px;
   transform-origin: 50% 50%;
   transform: perspective(500px);
   transform-style: preserve-3d;
+}
+
+.reply {
+  font-weight: weight("bold");
+  letter-spacing: 2.5px;
+  font-size: 1.35rem;
+  color: lighten($label-color, 10%);
 }
 
 .photo {
@@ -175,14 +186,17 @@ form {
 
 .fine {
   // color: blue;
+  @extend %fatter-normal;
   color: lighten($label-color, 10%);
 }
 
 .bad {
+  @extend %fatter-normal;
   color: $error1;
 }
 
 .wait {
+  @extend %fatter-normal;
   color: $black;
 }
 
@@ -205,14 +219,6 @@ form {
   display: block;
   font-size: 0.9rem;
   border-radius: 0.25rem;
-}
-
-.show-down {
-  animation: showDown 0.5s ease-in-out forwards;
-}
-
-.drop-fast {
-  animation: dropFast 0.35s linear forwards;
 }
 
 .hide-upper {
@@ -246,6 +252,10 @@ form {
 
 .no-display {
   display: none;
+}
+
+.trans {
+  transition: transform $rapid-time ease-out;
 }
 
 // @media all and (max-width: 847px) {

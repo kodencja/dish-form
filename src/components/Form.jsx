@@ -8,13 +8,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
   const handleChanging = dishContext.onChanging;
   const addToInputRef = dishContext.onAddToInputRef;
 
-  const forPizzaRef = useRef();
-  const forSoupRef = useRef();
-  const forSandwichRef = useRef();
-  const nameRef = useRef();
-  const timeRef = useRef();
-  const selectRef = useRef();
-
   const {
     name,
     preparation_time,
@@ -23,6 +16,7 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
     diameter,
     spiciness_scale,
     slices_of_bread,
+    outputStyle,
   } = state;
 
   useEffect(() => {
@@ -33,54 +27,11 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
     // console.log(slices_of_bread["val"]);
   });
 
-  // handle input appearing animation
-  useEffect(() => {
-    if (forPizzaRef.current !== undefined && forPizzaRef.current !== null) {
-      forPizzaRef.current.classList.add("show-up");
-      forPizzaRef.current.classList.remove("hide-up");
-    }
-    if (
-      forSandwichRef.current !== undefined &&
-      forSandwichRef.current !== null
-    ) {
-      forSandwichRef.current.classList.add("show-right");
-      forSandwichRef.current.classList.remove("hide-right");
-    }
-    if (forSoupRef.current !== undefined && forSoupRef.current !== null) {
-      forSoupRef.current.classList.add("show-left");
-      forSoupRef.current.classList.remove("hide-left");
-    }
-    if (nameRef.current !== undefined && nameRef.current !== null) {
-      setTimeout(() => {
-        nameRef.current.classList.add("show-left");
-        nameRef.current.classList.remove("hide-left");
-      }, 750);
-    }
-    if (timeRef.current !== undefined && timeRef.current !== null) {
-      setTimeout(() => {
-        timeRef.current.classList.add("show-right");
-        timeRef.current.classList.remove("hide-right");
-      }, 1250);
-    }
-    if (selectRef.current !== undefined && selectRef.current !== null) {
-      setTimeout(() => {
-        selectRef.current.classList.add("show-up");
-        selectRef.current.classList.remove("hide-up");
-      }, 1750);
-    }
-    if (ref.current !== undefined && ref.current !== null) {
-      setTimeout(() => {
-        ref.current.classList.add("show-down");
-        ref.current.classList.remove("hide-down");
-      }, 2250);
-    }
-  }, [type]);
-
   const forPizza = useMemo(() => {
     return (
       <div className="mrg-x-auto">
         <div className="input-cont">
-          <div className="flex hide-up" ref={forPizzaRef}>
+          <div className="flex hide-up trans" ref={addToInputRef}>
             <div className="one-column">
               <Input
                 tagType="input"
@@ -96,7 +47,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
                 max={30}
                 value={no_of_slices["val"]}
                 onChange={handleChanging}
-                ref={addToInputRef}
                 errorMsg={no_of_slices.check}
               />
             </div>
@@ -116,7 +66,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
                 max={50}
                 value={diameter["val"]}
                 onChange={handleChanging}
-                ref={addToInputRef}
                 errorMsg={diameter.check}
               />
             </div>
@@ -130,7 +79,8 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
     return (
       <div className="mrg-x-auto narrow">
         <div className="input-cont">
-          <div className="range hide-left" ref={forSoupRef}>
+          <div className="range hide-left trans" ref={addToInputRef}>
+            {/* <div className="range hide-left" ref={forSoupRef}> */}
             {/* <div className="range input-cont hide-up" ref={forSoupRef}> */}
             {/* <div className="mrg-x-auto hide-up" ref={forSoupRef}> */}
             <Input
@@ -148,20 +98,20 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
               max={10}
               value={spiciness_scale["val"]}
               onChange={handleChanging}
-              ref={addToInputRef}
               errorMsg={spiciness_scale.check}
             />
           </div>
         </div>
       </div>
     );
-  }, [type, spiciness_scale]);
+  }, [type, spiciness_scale, outputStyle]);
 
   const forSandwich = useMemo(() => {
     return (
       <div className="mrg-x-auto narrow">
         <div className="input-cont">
-          <div className="number-width hide-right" ref={forSandwichRef}>
+          <div className="number-width hide-right trans" ref={addToInputRef}>
+            {/* <div className="number-width hide-right" ref={forSandwichRef}> */}
             <Input
               tagType="input"
               title="No of slices"
@@ -176,7 +126,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
               value={slices_of_bread.val}
               // value={state[slices_of_bread]["val"]}
               onChange={handleChanging}
-              ref={addToInputRef}
               errorMsg={slices_of_bread.check}
             />
           </div>
@@ -189,7 +138,11 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
     <form id="dishes-form">
       <div className="row center">
         <div className="input-cont">
-          <div className="hide-left narrow-70 mrg-x-auto" ref={nameRef}>
+          <div
+            className="hide-left narrow-70 mrg-x-auto trans"
+            ref={addToInputRef}
+          >
+            {/* <div className="hide-left narrow-70 mrg-x-auto" ref={nameRef}> */}
             <Input
               tagType="input"
               title="Dish name"
@@ -202,14 +155,17 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
               required={true}
               value={name["val"]}
               onChange={handleChanging}
-              ref={addToInputRef}
               errorMsg={name.check}
             />
           </div>
         </div>
 
         <div className="input-cont">
-          <div className="hide-right narrow-70 mrg-x-auto" ref={timeRef}>
+          <div
+            className="trans hide-right narrow-70 mrg-x-auto"
+            ref={addToInputRef}
+          >
+            {/* <div className="hide-right narrow-70 mrg-x-auto" ref={timeRef}> */}
             <Input
               tagType="input"
               title="Preparation time"
@@ -224,14 +180,18 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
               pattern={"[0-9]{2}:[0-9]{2}:[0-9]{2}"}
               value={preparation_time["val"]}
               onChange={handleChanging}
-              ref={addToInputRef}
               errorMsg={preparation_time.check}
             />
           </div>
         </div>
 
         <div className="input-cont">
-          <div className="hide-up narrow-70 mrg-x-auto" ref={selectRef}>
+          <div
+            className="hide-up narrow-70 mrg-x-auto trans"
+            ref={addToInputRef}
+          >
+            {/* <div className="hide-up narrow-70 mrg-x-auto" ref={addToInputRef}> */}
+            {/* <div className="hide-up narrow-70 mrg-x-auto" ref={selectRef}> */}
             <Input
               tagType="select"
               title="Type"
@@ -243,7 +203,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
               required={true}
               value={type["val"]}
               onChange={handleChanging}
-              ref={addToInputRef}
               errorMsg={type.check}
             />
           </div>

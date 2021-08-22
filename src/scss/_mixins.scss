@@ -61,14 +61,14 @@
   @return map-get($distance-sizes, $distance-name);
 }
 
-@function color-inverse($color) {
-  @return invert($color);
-}
+// @function color-inverse($color) {
+//   @return invert($color);
+// }
 
-@function color-compl($color) {
-  @return complement($color);
-}
+// @function color-compl($color) {
+//   @return complement($color);
+// }
 
-@function color-mixed($color1, $color2, $weight) {
-  @return mix($color1, $color2, $weight);
-}
+// @function color-mixed($color1, $color2, $weight) {
+//   @return mix($color1, $color2, $weight);
+// }

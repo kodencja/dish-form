@@ -129,6 +129,22 @@ input[type="range"] {
   padding: 4px;
   // margin-left: 6px;
   // margin-left: 14px;
+
+  &:after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top-width: 4px;
+    border-bottom-width: 0px;
+    border-right-width: 8px;
+    border-left-width: 8px;
+    border-style: solid;
+    border-color: $bubble-bgr-color transparent transparent transparent;
+    position: absolute;
+    top: 100%;
+    left: 25%;
+    content: "";
+  }
 }
 
 #spiciness_scale {
@@ -249,7 +265,7 @@ label {
   width: auto;
   position: relative;
   @include paddMrg("margin", 0, 10px, 10px, 10px);
-  // transition: transform $short-time ease-out;
+  // transition: transform $rapid-time ease-out;
 }
 
 form {

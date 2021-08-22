@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/dish-form/static/css/main.dcfabb74.chunk.css",
+    "main.js": "/dish-form/static/js/main.0a60d415.chunk.js",
+    "main.js.map": "/dish-form/static/js/main.0a60d415.chunk.js.map",
+    "runtime-main.js": "/dish-form/static/js/runtime-main.81fc8f30.js",
+    "runtime-main.js.map": "/dish-form/static/js/runtime-main.81fc8f30.js.map",
+    "static/js/2.be2f37a0.chunk.js": "/dish-form/static/js/2.be2f37a0.chunk.js",
+    "static/js/2.be2f37a0.chunk.js.map": "/dish-form/static/js/2.be2f37a0.chunk.js.map",
+    "static/js/3.659773dc.chunk.js": "/dish-form/static/js/3.659773dc.chunk.js",
+    "static/js/3.659773dc.chunk.js.map": "/dish-form/static/js/3.659773dc.chunk.js.map",
+    "index.html": "/dish-form/index.html",
+    "static/css/main.dcfabb74.chunk.css.map": "/dish-form/static/css/main.dcfabb74.chunk.css.map",
+    "static/js/2.be2f37a0.chunk.js.LICENSE.txt": "/dish-form/static/js/2.be2f37a0.chunk.js.LICENSE.txt",
+    "static/media/style.css": "/dish-form/static/media/cerata1.b2082c24.png",
+    "static/media/pizza.jpg": "/dish-form/static/media/pizza.a8e2abcd.jpg",
+    "static/media/sandwich.jpg": "/dish-form/static/media/sandwich.4c85b99e.jpg",
+    "static/media/soup.jpg": "/dish-form/static/media/soup.eae9ab6c.jpg",
+    "static/media/veg10.jpg": "/dish-form/static/media/veg10.e9165112.jpg",
+    "static/media/veg4.jpg": "/dish-form/static/media/veg4.5db3e508.jpg",
+    "static/media/veg8.jpg": "/dish-form/static/media/veg8.d77e34bf.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.81fc8f30.js",
+    "static/js/2.be2f37a0.chunk.js",
+    "static/css/main.dcfabb74.chunk.css",
+    "static/js/main.0a60d415.chunk.js"
+  ]
+}

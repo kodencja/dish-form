@@ -1,14 +1,36 @@
 @keyframes showUp {
-  from {
+  // from {
+  //   transform: translateY(-125%);
+  // }
+  // to {
+  //   transform: translateY(0%);
+  // }
+
+  0% {
     transform: translateY(-125%);
   }
-  to {
+  25% {
+    transform: translateY(-75%);
+  }
+  40% {
+    transform: translateY(-40%);
+  }
+  55% {
+    transform: translateY(10%);
+  }
+  70% {
+    transform: translateY(-8%);
+  }
+  85% {
+    transform: translateY(5%);
+  }
+  100% {
     transform: translateY(0%);
   }
 }
 
 .show-up {
-  animation: showUp 0.5s ease-in-out forwards;
+  animation: showUp $faster-time ease-in-out forwards;
 }
 
 @keyframes showLeft {
@@ -23,7 +45,8 @@
 }
 
 .show-left {
-  animation: showLeft 0.5s ease-in-out forwards;
+  animation: showLeft $faster-time ease-out forwards;
+  // animation: fadeInLeft $short-time forwards;
 }
 
 @keyframes showRight {
@@ -38,22 +61,39 @@
 }
 
 .show-right {
-  animation: showRight 0.5s ease-in-out forwards;
+  animation: showRight $faster-time ease-out forwards;
 }
 
 @keyframes showDown {
-  from {
+  0% {
     transform: translateY(150%);
   }
-  to {
+  25% {
+    transform: translateY(75%);
+  }
+  40% {
+    transform: translateY(40%);
+  }
+  55% {
+    transform: translateY(-15%);
+  }
+  70% {
+    transform: translateY(8%);
+  }
+  85% {
+    transform: translateY(-5%);
+  }
+  100% {
     transform: translateY(0%);
   }
 }
 
+.show-down {
+  animation: showDown $faster-time ease-in-out forwards;
+}
+
 @keyframes hanging {
   0% {
-    // transform-origin: 50% 0% -50px;
-    // transform: translateZ(25px);
     transform: rotateX(-90deg);
   }
   15% {
@@ -85,8 +125,6 @@
   }
   100% {
     transform: rotateX(0deg);
-    // transform-origin: 50% 0% -50px;
-    // transform: translateZ(25px);
   }
 }
 
@@ -114,4 +152,50 @@
     transform: translateY(0%);
     visibility: visible;
   }
+}
+
+.drop-fast {
+  animation: dropFast $short-time linear forwards;
+}
+
+// @keyframes skewY {
+//   0% {
+//     transform: skewY(-50deg) translateY(-125%);
+//     visibility: hidden;
+//   }
+//   90% {
+//     transform: skewY(-45deg) translateY(-10%);
+//   }
+//   100% {
+//     transform: skewY(0deg) translateY(0%);
+//     visibility: visible;
+//   }
+// }
+
+@keyframes helloShow {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-150px);
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+  }
+
+  15% {
+    transform: translateY(-100px);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0px);
+  }
+}
+
+.hello {
+  animation: helloShow $normal-time linear forwards;
 }
