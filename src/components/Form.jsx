@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useMemo } from "react";
 import { DishContext } from "../App";
 import Input from "./Input";
 
@@ -18,14 +18,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
     slices_of_bread,
     outputStyle,
   } = state;
-
-  useEffect(() => {
-    // console.log(no_of_slices);
-    // console.log(spiciness_scale);
-    // console.log(spiciness_scale["val"]);
-    // console.log(slices_of_bread);
-    // console.log(slices_of_bread["val"]);
-  });
 
   const forPizza = useMemo(() => {
     return (
@@ -80,9 +72,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
       <div className="mrg-x-auto narrow">
         <div className="input-cont">
           <div className="range hide-left trans" ref={addToInputRef}>
-            {/* <div className="range hide-left" ref={forSoupRef}> */}
-            {/* <div className="range input-cont hide-up" ref={forSoupRef}> */}
-            {/* <div className="mrg-x-auto hide-up" ref={forSoupRef}> */}
             <Input
               tagType="range"
               title="Spiciness scale"
@@ -111,7 +100,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
       <div className="mrg-x-auto narrow">
         <div className="input-cont">
           <div className="number-width hide-right trans" ref={addToInputRef}>
-            {/* <div className="number-width hide-right" ref={forSandwichRef}> */}
             <Input
               tagType="input"
               title="No of slices"
@@ -124,7 +112,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
               required={onTypeVal === "sandwich" ? true : false}
               min={1}
               value={slices_of_bread.val}
-              // value={state[slices_of_bread]["val"]}
               onChange={handleChanging}
               errorMsg={slices_of_bread.check}
             />
@@ -142,7 +129,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
             className="hide-left narrow-70 mrg-x-auto trans"
             ref={addToInputRef}
           >
-            {/* <div className="hide-left narrow-70 mrg-x-auto" ref={nameRef}> */}
             <Input
               tagType="input"
               title="Dish name"
@@ -165,7 +151,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
             className="trans hide-right narrow-70 mrg-x-auto"
             ref={addToInputRef}
           >
-            {/* <div className="hide-right narrow-70 mrg-x-auto" ref={timeRef}> */}
             <Input
               tagType="input"
               title="Preparation time"
@@ -190,8 +175,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
             className="hide-up narrow-70 mrg-x-auto trans"
             ref={addToInputRef}
           >
-            {/* <div className="hide-up narrow-70 mrg-x-auto" ref={addToInputRef}> */}
-            {/* <div className="hide-up narrow-70 mrg-x-auto" ref={selectRef}> */}
             <Input
               tagType="select"
               title="Type"
@@ -230,8 +213,6 @@ const Form = React.forwardRef(({ onTypeVal, onSubmit }, ref) => {
       </div>
     </form>
   );
-  // };
 });
 
-// export default Form;
 export default React.memo(Form);

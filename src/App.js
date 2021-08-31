@@ -12,7 +12,7 @@ import { handleAPI } from "./functions/handleAPI";
 export const DishContext = React.createContext();
 
 // 'val' = value, 'sort' = type of input, 'check' = prop for message got back after validation
-// 'min' and 'max' are attributes of inputs - I put them here so prevent user from manipulating these values in the browser
+// 'min' and 'max' are attributes of inputs
 const inputInitState = {
   name: { val: "", sort: "text", check: "" },
   preparation_time: { val: "00:15:00", sort: "time", check: "" },
@@ -223,9 +223,3 @@ function App() {
 }
 
 export default App;
-
-// {!loading
-//   ? validationFinished === "not" && type.val !== ""
-//     ? image
-//     : finalResponse
-//   : "Wait..."}
